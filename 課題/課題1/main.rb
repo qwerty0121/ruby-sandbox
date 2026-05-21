@@ -3,19 +3,15 @@ PRODUCTS = {
   apple: 100,
   banana: 80,
   orange: 120,
-}
+}.freeze
 
 # 注文の合計金額を返す
-def sum_price(orders)
-  sum = 0
-  for order in orders
+def sum_price(orders, products)
+  orders.sum do |order|
     item = order[:item]
-    price = PRODUCTS.fetch(item, 0)
-    quantity = order[:quantity]
-    sum += price * quantity
+    quantity = order.fetch(:quantity, 0)
+    products.fetch(item, 0) * quantity
   end
-
-  sum
 end
 
 # ケース1
@@ -29,16 +25,16 @@ order1 = [
     quantity: 1,
   },
 ]
-puts "ケース1: #{sum_price(order1)}"
+puts "ケース1: #{sum_price(order1, PRODUCTS)}"
 
 # ケース2
 order2 = [
   {
     item: :banana,
-  quantity: 5,
+    quantity: 5,
   }
 ]
-puts "ケース2: #{sum_price(order2)}"
+puts "ケース2: #{sum_price(order2, PRODUCTS)}"
 
 # ケース3
 order3 = [
@@ -51,4 +47,4 @@ order3 = [
     quantity: 3,
   },
 ]
-puts "ケース3: #{sum_price(order3)}"
+puts "ケース3: #{sum_price(order3, PRODUCTS)}"
