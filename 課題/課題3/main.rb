@@ -2,10 +2,7 @@
 
 # URLのクエリ文字列を解析し、パラメータをハッシュとして取得する
 def parse_url_params(params_str)
-  params_str.to_s.split("&").map do |token|
-    key, val = token.split("=")
-    [key, val.to_s]
-  end.to_h
+  params_str.to_s.split("&").reject(&:empty?).to_h { |tokens| tokens.split("=", 2) }
 end
 
 # ケース1
