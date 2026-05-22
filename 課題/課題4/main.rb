@@ -4,7 +4,10 @@
 # 1. 年齢が20歳以上
 # 2. ロールが :admin でない
 def extract_target_usernames(users)
-  users.select { |user| user[:age] >= 20 && user[:role] != :admin }.map { |user| user[:name].upcase }
+  users
+    .to_a
+    .select { |user| user.fetch(:age, 0) >= 20 && user[:role] != :admin }
+    .map { |user| user[:name].to_s.upcase }
 end
 
 # ケース1
