@@ -2,7 +2,7 @@
 
 module Serializable
   def to_json_string
-    self.instance_variables.to_h { |v| [v, self.instance_variable_get(v)] }
+    instance_variables.to_h { |v| [v, instance_variable_get(v)] }
   end
 end
 
